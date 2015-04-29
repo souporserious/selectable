@@ -1,42 +1,31 @@
-Expose Modal
+Selectable
 ============
 
-An easy to use modal that responds to it's environment. Documentation coming soon.
+Turn anything into a selectable. Uses a an OS style drag box to select/deselect items. Documentation coming soon.
 
 ## Installation
 
-    npm install expose-modal --save
+    npm install selectable --save
 
 ## Usage
 
-    var Expose = require('expose-modal');
-    
-    // Init Multiple Modals
-    var modals = document.querySelectorAll('[data-expose]');
+    var selectables = document.querySelectorAll('[data-selectable]'),
+        selectableList = new Selectables(selectables),
+        toggleSelectables = document.querySelector('.toggle-selectables');
 
-    for(var i = modals.length; i--;) {
-        
-        var expose = new Expose(modals[i]);
+    // toggle all selectables with a checkbox
+    toggleSelectables.addEventListener('change', function () {
+        if(this.checked) {
+            selectableList.selectAll();
+        }
+        else {
+            selectableList.deselectAll();
+        }
+    });
 
-        // listen for modal open/close
-        expose.modal.addEventListener('expose:opened', onModalOpen, false);
-        expose.modal.addEventListener('expose:closed', onModalClose, false);
-        
-        // close modal with cancel button
-        expose.modal.querySelector('.modal_cancel').addEventListener('click', closeModal.bind(expose), false);
-    }
-
-    function onModalOpen() {
-        //console.log('modal opened');
-    }
-
-    function onModalClose() {
-        //console.log('modal closed');
-    }
-
-    function closeModal() {
-        this.closeModal();
-    }
+    window.addEventListener('deselect:all', function () {
+        toggleSelectables.checked = false;
+    });
 
 
 ## Release History
